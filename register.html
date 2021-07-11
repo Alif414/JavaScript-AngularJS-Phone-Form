@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html data-ng-app="">
+<head>
+    <title>Register</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap -->
+    <link href="frameworks/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5
+    elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the
+    page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="row"><h1>Phone Cloud Registration App</h1></div>
+
+        <div class="row">
+            <strong>Enter user name: </strong>
+            <input type="text" data-ng-model="uName"/>
+            <!-- Reads username typed -->
+        </div>
+        <br/>
+
+        <div class="row">
+            <strong>Enter password: </strong>
+            <input type="text" data-ng-model="uPassword"/>
+            <!-- Reads password typed -->
+        </div>
+        <br/>
+
+        <div class="row">
+            <strong>Re-enter password: </strong>
+            <input type="text" data-ng-model="rtPassword" />
+            <span class="alert alert-danger" role="alert" data-ng-show="rtPassword !== uPassword">
+                Password does not match
+            </span>
+            <!-- Ngif prompts an alert when text in the retyped password field is not the same as the password field -->
+        </div>
+
+        <div class="row"><h3>Phone Operating System</h3></div>
+
+        <div data-ng-init="phones =
+                           [{model:'HTC 8X',os:'Android'},{model:'Samsung Galaxy S7',os:'Android'},
+                            {model:'Sony Xperia Z5',os:'Android'},{model:'Iphone 6',os:'IOS'},{model:'Iphone 6S',os:'IOS'},
+                            {model:'Iphone 6 Plus',os:'IOS'},{model:'HTC One M9',os:'Windows'},{model:'Microsoft 950',os:'Windows'},
+                            {model:'Microsoft 950XL',os:'Windows'}]" >
+
+            <div class="row">
+                <div class ="col-md-4" data-ng-init="phoneOS.os='Android'">
+                    <input type="radio" name="phoneOS" id="Android" value="Android" required="required" data-ng-model="phoneOS.os" />
+                    <strong>Android</strong>
+                    <input type="radio" name="phoneOS" id="IOS" value="IOS" required="required" data-ng-model="phoneOS.os" />
+                    <strong>IOS</strong>
+                    <input type="radio" name="phoneOS" id="Windows" value="Windows" required="required" data-ng-model="phoneOS.os" />
+                    <strong>Windows</strong>
+                    <!-- Radio buttons for OS -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p>Phone Model</p>
+                    <strong>Select phone model</strong>
+                    <select ng-Model="modelPhone">
+                        <option ng-repeat="phone in phones | filter:phoneOS:strict" value="{{phone.model}}">{{phone.model}}</option>
+                        <!-- Dropdown for the phone models with a filter that will show phones with only the OS selected on the radio -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" data-ng-if="uName != null && rtPassword == uPassword && modelPhone != null">
+                <p>Summary:</p>
+                <div class="col">
+                    <ul>
+                        <li>Username: <span data-ng-bind="uName"></span></li>
+                        <li>Password: <span data-ng-if="rtPassword == uPassword" data-ng-bind="uPassword"></span></li>
+                        <li>OS: <span data-ng-bind="phoneOS.os"></span></li>
+                        <li>Phone: <span data-ng-bind="modelPhone"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
+    <script src="frameworks/js/jquery.min.js"></script>
+    <!-- All Bootstrap plug-ins file -->
+    <script src="frameworks/js/bootstrap.min.js"></script>
+    <!-- Basic AngularJS -->
+    <script src="frameworks/js/angular.min.js"></script>
+</body>
+</html>
